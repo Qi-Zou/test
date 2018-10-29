@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cmmi.mapper.FileMapper">
+  <resultMap id="BaseResultMap" type="com.cmmi.model.File">
+    <id column="file_id" jdbcType="INTEGER" property="fileId" />
+    <result column="file_type" jdbcType="INTEGER" property="fileType" />
+    <result column="file_url" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="file_explain" jdbcType="VARCHAR" property="fileExplain" />
+    <result column="count" jdbcType="INTEGER" property="count" />
+    <result column="upload_id" jdbcType="VARCHAR" property="uploadId" />
+    <result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    file_id, file_type, file_url, file_explain, count, upload_id, upload_time
+  </sql>
+  <select id="selectByExample" parameterType="com.cmmi.model.FileExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_file
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_file
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.cmmi.model.FileExample">
+    delete from t_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.cmmi.model.File">
+    insert into t_file (file_id, file_type, file_url, 
+      file_explain, count, upload_id, 
+      upload_time)
+    values (#{fileId,jdbcType=INTEGER}, #{fileType,jdbcType=INTEGER}, #{fileUrl,jdbcType=VARCHAR}, 
+      #{fileExplain,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER}, #{uploadId,jdbcType=VARCHAR}, 
+      #{uploadTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cmmi.model.File">
+    insert into t_file
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        file_id,
+      </if>
+      <if test="fileType != null">
+        file_type,
+      </if>
+      <if test="fileUrl != null">
+        file_url,
+      </if>
+      <if test="fileExplain != null">
+        file_explain,
+      </if>
+      <if test="count != null">
+        count,
+      </if>
+      <if test="uploadId != null">
+        upload_id,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="fileId != null">
+        #{fileId,jdbcType=INTEGER},
+      </if>
+      <if test="fileType != null">
+        #{fileType,jdbcType=INTEGER},
+      </if>
+      <if test="fileUrl != null">
+        #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExplain != null">
+        #{fileExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=INTEGER},
+      </if>
+      <if test="uploadId != null">
+        #{uploadId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.cmmi.model.FileExample" resultType="java.lang.Long">
+    select count(*) from t_file
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_file
+    <set>
+      <if test="record.fileId != null">
+        file_id = #{record.fileId,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileType != null">
+        file_type = #{record.fileType,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileUrl != null">
+        file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fileExplain != null">
+        file_explain = #{record.fileExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.count != null">
+        count = #{record.count,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploadId != null">
+        upload_id = #{record.uploadId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_file
+    set file_id = #{record.fileId,jdbcType=INTEGER},
+      file_type = #{record.fileType,jdbcType=INTEGER},
+      file_url = #{record.fileUrl,jdbcType=VARCHAR},
+      file_explain = #{record.fileExplain,jdbcType=VARCHAR},
+      count = #{record.count,jdbcType=INTEGER},
+      upload_id = #{record.uploadId,jdbcType=VARCHAR},
+      upload_time = #{record.uploadTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cmmi.model.File">
+    update t_file
+    <set>
+      <if test="fileType != null">
+        file_type = #{fileType,jdbcType=INTEGER},
+      </if>
+      <if test="fileUrl != null">
+        file_url = #{fileUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="fileExplain != null">
+        file_explain = #{fileExplain,jdbcType=VARCHAR},
+      </if>
+      <if test="count != null">
+        count = #{count,jdbcType=INTEGER},
+      </if>
+      <if test="uploadId != null">
+        upload_id = #{uploadId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cmmi.model.File">
+    update t_file
+    set file_type = #{fileType,jdbcType=INTEGER},
+      file_url = #{fileUrl,jdbcType=VARCHAR},
+      file_explain = #{fileExplain,jdbcType=VARCHAR},
+      count = #{count,jdbcType=INTEGER},
+      upload_id = #{uploadId,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=VARCHAR}
+    where file_id = #{fileId,jdbcType=INTEGER}
+  </update>
+
+  <!--通过上传人ID，查找该人上传的所有文件-->
+  <select id="findByUploadId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select file_id,file_type,file_url,file_explain,count,upload_id,upload_time from t_file where upload_id = #{uploadId}
+  </select>
+  <!--通过文件的类型查找所有文件-->
+  <select id="findByFileType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select file_id,file_type,file_url,file_explain,count,upload_id,upload_time from t_file where file_type = #{fileType}
+  </select>
+
+
+</mapper>

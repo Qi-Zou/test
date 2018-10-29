@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+
+  <settings>
+    <setting name="logImpl" value="log4j" />
+    <!-- 设置延迟加载<setting name="lazyLoadingEnabled" value="true" />  -->
+  </settings>
+
+  <!--  将bean对应的xml文件配置在这里  -->
+  <mappers>
+    <mapper resource="com/cmmi/mapper/EmployeesMapper.xml"/>
+    <mapper resource="com/cmmi/mapper/FeedbackMapper.xml"/>
+    <mapper resource="com/cmmi/mapper/FileMapper.xml"/>
+  </mappers>
+
+
+
+
+</configuration>
